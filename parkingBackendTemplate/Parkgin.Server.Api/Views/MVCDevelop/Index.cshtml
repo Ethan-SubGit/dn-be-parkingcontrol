@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>SignalR</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.3/signalr.min.js"></script>
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/SignalRDataHub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    async function start() {
+        try {
+            await connection.start();
+            console.log("connected");
+        } catch (err) {
+            console.log(err);
+            setTimeout(() => start(), 10000);
+        }
+    };
+
+    connection.onclose(async () => {
+        await start();
+    });
+
+    // Start the connection.
+    start();
+    //connection.invoke("SendMessage", user, message).catch(err => console.error(err));
+    /* this is here to show an alternative to start, with a then
+    connection.start().then(() => console.log("connected"));
+    */
+    connection.on("signalRMessage", (message) => {
+        const encodedMsg = `says ${message}`;
+        const li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);
+    });
+    /* this is here to show another alternative to start, with a catch
+    connection.start().catch(err => console.error(err));
+    */
+</script>
+<ul id="messagesList"></ul>

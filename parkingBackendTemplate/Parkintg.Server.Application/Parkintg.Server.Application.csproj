@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="IntegrationEvents\**" />
+    <EmbeddedResource Remove="IntegrationEvents\**" />
+    <None Remove="IntegrationEvents\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\SwaggerServiceExtensions.cs" />
+    <Compile Remove="Services\UserService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\Procedures\" />
+    <Folder Include="Database\Queries\" />
+    <Folder Include="Database\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Parking.Server.Infrastructure\Parking.Server.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
